@@ -1,8 +1,9 @@
 terraform {
+  required_version = ">= 1.1.4"
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 3.0"
+      version = "3.7.0"
     }
   }
 }
@@ -34,7 +35,7 @@ data "cloudflare_zones" "website" {
 resource "cloudflare_filter" "wordpress_admin_login" {
   zone_id     = data.cloudflare_zones.website.zones[0].id
   description = "Wordpress Login Challenge"
-  expression  = "(http.request.uri.path contains \"/wp-login.php\" and not ip.src in {X.X.X.X})" #replace X.X.X.X with your IP address.
+  expression  = "(http.request.uri.path contains \"/wp-login.php\" and not ip.src in {x.x.x.x})" #replace x.x.x.x with your IP address.
 }
 
 resource "cloudflare_firewall_rule" "wordpress_admin_login" {
